@@ -6,7 +6,15 @@ from discord.ext import commands
 
 load_dotenv()
 token = os.getenv('TOKEN')
-bot = commands.Bot(command_prefix=".", intents=discord.Intents.all())
+bot = commands.Bot(command_prefix="*", intents=discord.Intents.all())
+
+class My_Cog(commands.Cog, name="deals"):
+    def __init__(self, bot):
+        self.bot = bot
+
+    @commands.command(name='Slickdeals scraper' , brief='Gets deals from your query', description='Grabs deals from www.slickdeals.net and posts it to your current channel')
+    async def test(ctx):
+        await ctx.send('test')
 
 @bot.event
 async def on_message(message):
@@ -25,18 +33,20 @@ async def on_message(message):
             return
         elif user_message.lower() == "bye":
             await message.channel.send(f'Bye {username}')
-        elif user_message.lower() == "deals":
-            await message.channel.send("https://slickdeals.net/")
 
 @bot.command()
 async def options(ctx):
-    if ctx == "$options -h" or "$options help":
+    if ctx == "*help":
         await ctx.send(f"""
-            Usage: $help [option] 
-            -h      : help page
-         deals      : slickdeals url
+            Usage: *help
+            *h     : help page
+         *deals      : slickdeals url
             """)
+    elif ctx == "*deals":
+        await ctx.send("www.slickdeals.net")
+
             
 
 if __name__ == "__main__":
+    bot.add_cog(My_Cog(bot))
     bot.run(token)
