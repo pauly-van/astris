@@ -2,7 +2,7 @@ from bs4 import BeautifulSoup
 from requests import get
 
 def scrapeSlickDeals():
-    url = 'https://slickdeals.net/'
+    url = 'https://slickdeals.net'
     r = get(url)
     soup = BeautifulSoup(r.text, 'html.parser')
 

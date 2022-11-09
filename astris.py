@@ -15,7 +15,20 @@ class My_Cog(commands.Cog, name="deals"):
 
     @commands.command(name='Slickdeals scraper' , brief='Gets deals from your query', description='Grabs deals from www.slickdeals.net and posts it to your current channel')
     async def test(ctx):
-        await ctx.send('test')
+        await ctx.send("hi")
+            
+
+@bot.command(name="deals")
+async def deals(ctx):
+    deals = scrapeSlickDeals()
+    for d in range(5):
+        await ctx.channel.send(
+            f"""
+            {deals[d]["title"]} 
+            {deals[d]["link"]}
+            {deals[d]["price"]} 
+            """)
+
 
 @bot.event
 async def on_message(message):
