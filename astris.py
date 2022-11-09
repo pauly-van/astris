@@ -26,7 +26,7 @@ async def on_message(message):
     if message.author == bot.user:
         return
     
-    if channel == "bot-testing":
+    if channel == "bot-testing" or "town-square":
         await bot.process_commands(message)
         if user_message.lower() == "hello" or user_message.lower() == "hi":
             await message.channel.send(f'Hello {username}')
@@ -34,18 +34,6 @@ async def on_message(message):
         elif user_message.lower() == "bye":
             await message.channel.send(f'Bye {username}')
 
-@bot.command()
-async def options(ctx):
-    if ctx == "*help":
-        await ctx.send(f"""
-            Usage: *help
-            *h     : help page
-         *deals      : slickdeals url
-            """)
-    elif ctx == "*deals":
-        await ctx.send("www.slickdeals.net")
-
-            
 
 if __name__ == "__main__":
     bot.add_cog(My_Cog(bot))
