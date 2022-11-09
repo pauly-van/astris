@@ -3,6 +3,7 @@
 import discord, os, random, requests
 from dotenv import load_dotenv
 from discord.ext import commands
+from slickdeals import scrapeSlickDeals
 
 load_dotenv()
 token = os.getenv('TOKEN')
@@ -26,7 +27,7 @@ async def on_message(message):
         elif user_message.lower() == "bye":
             await message.channel.send(f'Bye {username}')
         elif user_message.lower() == "deals":
-            await message.channel.send("https://slickdeals.net/")
+            await message.channel.send(scrapeSlickDeals())
 
 @bot.command()
 async def options(ctx):
