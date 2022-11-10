@@ -7,7 +7,15 @@ from slickdeals import scrapeSlickDeals
 
 load_dotenv()
 token = os.getenv('TOKEN')
-bot = commands.Bot(command_prefix=".", intents=discord.Intents.all())
+bot = commands.Bot(command_prefix="*", intents=discord.Intents.all())
+
+class My_Cog(commands.Cog, name="deals"):
+    def __init__(self, bot):
+        self.bot = bot
+
+    @commands.command(name='Slickdeals scraper' , brief='Gets deals from your query', description='Grabs deals from www.slickdeals.net and posts it to your current channel')
+    async def test(ctx):
+        await ctx.send('test')
 
 @bot.event
 async def on_message(message):
@@ -19,25 +27,15 @@ async def on_message(message):
     if message.author == bot.user:
         return
     
-    if channel == "bot-testing":
+    if channel == "bot-testing" or "town-square":
         await bot.process_commands(message)
         if user_message.lower() == "hello" or user_message.lower() == "hi":
             await message.channel.send(f'Hello {username}')
             return
         elif user_message.lower() == "bye":
             await message.channel.send(f'Bye {username}')
-        elif user_message.lower() == "deals":
-            await message.channel.send(scrapeSlickDeals())
 
-@bot.command()
-async def options(ctx):
-    if ctx == "$options -h" or "$options help":
-        await ctx.send(f"""
-            Usage: $help [option] 
-            -h      : help page
-         deals      : slickdeals url
-            """)
-            
 
 if __name__ == "__main__":
+    bot.add_cog(My_Cog(bot))
     bot.run(token)
