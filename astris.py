@@ -3,6 +3,7 @@
 import discord, os, random, requests
 from dotenv import load_dotenv
 from discord.ext import commands
+from slickdeals import scrapeSlickDeals
 
 load_dotenv()
 token = os.getenv('TOKEN')
