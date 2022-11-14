@@ -45,7 +45,6 @@ class Main(commands.Cog):
     @commands.command(name='char-screen' , brief='List of family member screen name with real name association', description='List of family member screen name with real name association')
     async def test(self, ctx, func, name=None):
         members = read()
-        peeps = "\n"
         match func:
             case "list":
                 for key, value in members.items():
@@ -54,6 +53,8 @@ class Main(commands.Cog):
             case "add":
                 pass
             case "delete":
+                pass
+            case "update":
                 pass
 
 def setup(bot):

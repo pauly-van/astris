@@ -1,5 +1,3 @@
-#! /usr/bin/python3
-
 import discord, os
 from dotenv import load_dotenv
 from discord.ext import commands
