@@ -1,10 +1,12 @@
 import discord, json
 from read import read
-from slickdeals import scrapeSlickDeals
-from stocks import scrapeYahooStock
+from read import update
+from read import write
+from commands.slickdeals import scrapeSlickDeals
+from commands.stocks import getStock
 from discord.ext import commands
 
-class Main(commands.Cog):
+class Commands(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.last_member = None
@@ -37,25 +39,37 @@ class Main(commands.Cog):
                 """)
 
     @commands.command(name='stocks', brief='Get stock prices of added ticker or popular lists', description='Post to channel stock prices of arbitrary tickers or list top from site')
-    async def stock(self, ctx, arg):
-        print(scrapeYahooStock(arg))
-    #    await ctx.send("hi")
-    #    await ctx.send_message(message.channel, f"The stock price for {stock.upper()} is ${stock_price} currently.")
+    async def stock(self, ctx, arg, func=None):
+        match func:
+            case None:
+                stock = getStock(arg)
+                await ctx.channel.send(f"""
+                                {stock['longName']}
+                                {stock['currentPrice']}
+                                {stock['logo_url']}
+                                """)
+            case 'list':
+                pass
+            case 'add':
+                pass
+            case 'delete':
+                pass
 
-    @commands.command(name='char-screen' , brief='List of family member screen name with real name association', description='List of family member screen name with real name association')
-    async def test(self, ctx, func, name=None):
+    @commands.command(name='characters' , brief='List of family member screen name with real name association', description='List of family member screen name with real name association')
+    async def characters(self, ctx, func, alias=None, name=None):
         members = read()
         match func:
             case "list":
+                peeps = ""
                 for key, value in members.items():
                     peeps += f"""Alias: `{key}`: Name: `{value}`\n"""
                 await ctx.channel.send(peeps)
             case "add":
-                pass
+                update(func, alias, name)
             case "delete":
-                pass
+                update(func, alias, name)
             case "update":
                 pass
 
 def setup(bot):
-    bot.add_cog(Main(bot))
+    bot.add_cog(Commands(bot))
