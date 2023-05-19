@@ -1,22 +1,24 @@
+#! /usr/bin/python3
 from bs4 import BeautifulSoup
 from requests import get
 
-def scrapeSlickDeals():
+async def scrapeSlickDeals():
     url = 'https://slickdeals.net'
     r = get(url)
     soup = BeautifulSoup(r.text, 'html.parser')
 
-    removeHidden = soup.find_all('div', {'class': 'removeHidden'})
+    removeHidden = soup.find_all('li', {'class': 'frontpageGrid__feedItem'})
 
     fpdeals = []
     for r in removeHidden:
-        fpdeals += r.find_all('li', {'data-module-id': 'Frontpage Slickdeals'})
+        fpdeals += r.find_all('div', {'data-module-id': 'Frontpage Slickdeals'})
     deals = []
+    print(fpdeals)
 
     for d in fpdeals:
-        card_content = d.find('div', {'class': 'bp-c-card_content'})
-        title = card_content.find('a', {'class': 'bp-c-card_title'})
-        price = card_content.find('span', {'class': 'bp-p-dealCard_price'})
+        card_content = d.find('div', {'class': 'dealCard__content'})
+        title = card_content.find('a', {'class': 'dealCard__title'})
+        price = card_content.find('span', {'class': 'dealCard__price'})
 
         item = {
           'title': title.text,
@@ -26,3 +28,5 @@ def scrapeSlickDeals():
         deals.append(item)
 
     return deals
+
+

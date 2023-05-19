@@ -29,7 +29,7 @@ class Commands(commands.Cog):
 
     @commands.command(name='deals' , brief='Gets deals from your query or top page items', description='Grabs deals from www.slickdeals.net and posts it to your current channel')
     async def deals(self, ctx, arg=10):
-        deals = scrapeSlickDeals()
+        deals = await scrapeSlickDeals()
         items = int(arg)
         for d in range(items):
             await ctx.channel.send(
@@ -43,11 +43,12 @@ class Commands(commands.Cog):
     async def stock(self, ctx, arg, func=None):
         match func:
             case None:
-                stock = getStock(arg)
+                stock = await getStock(arg)
+                print(stock)
                 await ctx.channel.send(f"""
                                 {stock['longName']}
                                 {stock['currentPrice']}
-                                {stock['logo_url']}
+                                {stock['website']}
                                 """)
             case 'list':
                 pass

@@ -1,6 +1,6 @@
 import yfinance as yf
 
-def getStock(ticker):
+async def getStock(ticker):
     stock = yf.Ticker(ticker)
     return stock.info
 
