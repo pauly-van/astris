@@ -1,6 +1,5 @@
-#! /usr/bin/python3
-
-import discord, os
+#! /home/pauly/.local/share/virtualenvs/astris-w4TLMMgf/bin/python3
+import discord, os, asyncio
 from dotenv import load_dotenv
 from discord.ext import commands
 
@@ -28,5 +27,5 @@ async def on_message(message):
 
 
 if __name__ == "__main__":
-    bot.load_extension("commands.cmds")
+    bot.load_extension("cogs.cmds")
     bot.run(token)

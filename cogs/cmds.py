@@ -1,9 +1,10 @@
-import discord, json
+#! /home/pauly/.local/share/virtualenvs/astris-w4TLMMgf/bin/python3
+import discord
 from read import read
 from read import update
 from read import write
-from commands.slickdeals import scrapeSlickDeals
-from commands.stocks import getStock
+from cogs.slickdeals import scrapeSlickDeals
+from cogs.stocks import getStock
 from discord.ext import commands
 
 class Commands(commands.Cog):
@@ -71,5 +72,5 @@ class Commands(commands.Cog):
             case "update":
                 pass
 
-def setup(bot):
-    bot.add_cog(Commands(bot))
+async def setup(bot):
+    await bot.add_cog(Commands(bot))
