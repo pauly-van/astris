@@ -25,7 +25,10 @@ async def on_message(message):
         elif user_message.lower() == "bye":
             await message.channel.send(f'Bye {username}')
 
+@bot.command()
+async def load_cogs(extension):
+    await bot.load_extension(extension)
 
-if __name__ == "__main__":
-    bot.load_extension("cogs.cmds")
+if __name__ == '__main__':
+    asyncio.run(load_cogs("cogs.cmds"))
     bot.run(token)
