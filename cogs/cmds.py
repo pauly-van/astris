@@ -1,11 +1,14 @@
 #! /home/pauly/.local/share/virtualenvs/astris-w4TLMMgf/bin/python3
-import discord
+import discord, time
 from read import read
 from read import update
 from read import write
 from cogs.slickdeals import scrapeSlickDeals
 from cogs.stocks import getStock
 from discord.ext import commands
+from datetime import datetime
+from datetime import timedelta
+
 
 class Commands(commands.Cog):
     def __init__(self, bot):
@@ -72,6 +75,15 @@ class Commands(commands.Cog):
                 update(func, alias, name)
             case "update":
                 pass
+
+    @commands.command(name='test', brief='Make an announcement that repeats to all members', description='Announcement that you can set how often it repeats and the details')
+    async def announce(self, ctx, msg, interval=None):
+        n_interval = int(interval)
+        now = datetime.now()
+        now_1 = time.localtime()
+        format_time = datetime.strptime(str(now_1), "%Y:%m:%d") 
+#        time_to_change = format_time + timedelta(days=n_interval)
+        await ctx.channel.send(format_time)
 
 async def setup(bot):
     await bot.add_cog(Commands(bot))

@@ -17,7 +17,7 @@ async def on_message(message):
     if message.author == bot.user:
         return
     
-    if channel == "bot-testing" or "town-square":
+    if channel == "bot-testing" or "town-square" or "bot-playground" or "bot-testing-dev":
         await bot.process_commands(message)
         if user_message.lower() == "hello" or user_message.lower() == "hi":
             await message.channel.send(f'Hello {username}')
